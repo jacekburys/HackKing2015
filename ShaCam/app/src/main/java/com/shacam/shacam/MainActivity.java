@@ -26,6 +26,16 @@ public class MainActivity extends Activity {
                 dispatchTakePictureIntent();
             }
         });
+
+        Button button2 = (Button)findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scaleBitmap();
+            }
+        });
+
+
     }
 
 
@@ -41,17 +51,26 @@ public class MainActivity extends Activity {
         }
     }
 
+    Bitmap imageBitmap = null;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = (Bitmap) extras.get("data");
             ImageView imageView = (ImageView)findViewById(R.id.imageView);
             imageView.setImageBitmap(imageBitmap);
         }
     }
 
     //
+
+    private void scaleBitmap() {
+        if(imageBitmap == null) return;
+        Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 20, 20, false);
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        imageView.setImageBitmap(scaled);
+    }
 
 
 
